@@ -15,6 +15,7 @@ echo "$(date -u) - Current checksum '$cert_hash'"
 
 inotifywait -q -m "$cert_path" |
   while read -r path action file; do
+    echo "Received action $action on $cert_path"
     new_cert_hash="$(sha256sum $cert_path | awk '{ print $1 }')"
     if [ "$cert_hash" != "$new_cert_hash" ]; then
       echo "$(date -u) - New checksum '$new_cert_hash'"
